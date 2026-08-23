@@ -1,0 +1,101 @@
+# Declarative experiment matrix. Each entry is a deep override of anysearch.yaml.
+# Phase-only variants retain the full 500 optimizer-step training length.
+schema_version: 1
+base_config: anysearch.yaml
+ablations:
+  full:
+    description: Default AnySearch configuration.
+    overrides: {}
+
+  fixed_gamma_max:
+    description: Fixed gamma_q = gamma_max for every query group.
+    overrides:
+      reward.tool.gamma_mode: fixed
+      reward.tool.gamma_fixed: 0.3
+
+  fixed_gamma_half:
+    description: Fixed gamma_q = 0.5 * gamma_max.
+    overrides:
+      reward.tool.gamma_mode: fixed
+      reward.tool.gamma_fixed: 0.15
+
+  no_tool_reward:
+    description: Remove R_tool by fixing gamma_q to zero.
+    overrides:
+      reward.tool.enabled: false
+      reward.tool.gamma_mode: fixed
+      reward.tool.gamma_fixed: 0.0
+
+  no_absolute_tool_component:
+    description: Remove R_abs while retaining R_rel.
+    overrides:
+      reward.tool.absolute_component: false
+
+  no_relative_tool_component:
+    description: Remove R_rel while retaining R_abs.
+    overrides:
+      reward.tool.relative_component: false
+
+  no_format_reward:
+    description: Training-dynamics control without R_format.
+    overrides:
+      reward.format.enabled: false
+      reward.format.weight: 0.0
+
+  full_scaffold:
+    description: Scaffold in both phases, removed at inference.
+    overrides:
+      curriculum.phase_ii.scaffold: true
+      interaction.inference_scaffold: false
+
+  no_scaffold:
+    description: No scaffold in either training phase or inference.
+    overrides:
+      curriculum.phase_i.scaffold: false
+      curriculum.phase_ii.scaffold: false
+      interaction.inference_scaffold: false
+
+  ours_plus_scaffold:
+    description: Full AnySearch training with scaffold restored only at inference.
+    evaluation_only: true
+    overrides:
+      interaction.inference_scaffold: true
+
+  only_scaffold:
+    description: Untrained backbone with the scaffold at inference.
+    evaluation_only: true
+    checkpoint: backbone
+    overrides:
+      interaction.inference_scaffold: true
+
+  adaptive_no_smoothing:
+    description: Phase II adaptive sampling with lambda = 0.
+    overrides:
+      curriculum.uniform_smoothing_lambda: 0.0
+
+  uniform_sampling:
+    description: Phase II uniform sampling with lambda = 1.
+    overrides:
+      curriculum.uniform_smoothing_lambda: 1.0
+
+  phase_i_only:
+    description: Phase I mechanism for all 100 rollouts / 500 optimizer steps.
+    overrides:
+      curriculum.phase_i.num_rollouts: 100
+      curriculum.phase_i.optimizer_steps: 500
+      curriculum.phase_i.schedule.rollouts_per_budget: 20
+      curriculum.phase_i.schedule.optimizer_steps_per_budget: 100
+      curriculum.phase_ii.start_rollout: 100
+      curriculum.phase_ii.num_rollouts: 0
+      curriculum.phase_ii.optimizer_steps: 0
+
+  phase_ii_only:
+    description: Phase II mechanism for all 100 rollouts / 500 optimizer steps.
+    overrides:
+      curriculum.phase_i.num_rollouts: 0
+      curriculum.phase_i.optimizer_steps: 0
+      curriculum.phase_i.schedule.rollouts_per_budget: 0
+      curriculum.phase_i.schedule.optimizer_steps_per_budget: 0
+      curriculum.phase_ii.start_rollout: 0
+      curriculum.phase_ii.num_rollouts: 100
+      curriculum.phase_ii.optimizer_steps: 500

@@ -1,0 +1,243 @@
+# AnySearch evaluation matrix: seven benchmarks at B=1..8.
+# EVAL_DATA_DIR must contain one canonical Parquet per dataset.
+eval:
+  defaults:
+    input_key: question
+    label_key: label
+    metadata_key: metadata
+    n_samples_per_eval_prompt: 1
+    temperature: 1.0
+    top_p: 1.0
+    top_k: -1
+    max_response_len: 4096
+  datasets:
+    - name: nq_b1
+      path: ${oc.env:EVAL_DATA_DIR}/nq.parquet
+      custom_generate_function_path: examples.anysearch.slime_ext.rollout.generate
+      metadata_overrides: {dataset: nq, budget: 1, evaluation: true}
+    - name: nq_b2
+      path: ${oc.env:EVAL_DATA_DIR}/nq.parquet
+      custom_generate_function_path: examples.anysearch.slime_ext.rollout.generate
+      metadata_overrides: {dataset: nq, budget: 2, evaluation: true}
+    - name: nq_b3
+      path: ${oc.env:EVAL_DATA_DIR}/nq.parquet
+      custom_generate_function_path: examples.anysearch.slime_ext.rollout.generate
+      metadata_overrides: {dataset: nq, budget: 3, evaluation: true}
+    - name: nq_b4
+      path: ${oc.env:EVAL_DATA_DIR}/nq.parquet
+      custom_generate_function_path: examples.anysearch.slime_ext.rollout.generate
+      metadata_overrides: {dataset: nq, budget: 4, evaluation: true}
+    - name: nq_b5
+      path: ${oc.env:EVAL_DATA_DIR}/nq.parquet
+      custom_generate_function_path: examples.anysearch.slime_ext.rollout.generate
+      metadata_overrides: {dataset: nq, budget: 5, evaluation: true}
+    - name: nq_b6
+      path: ${oc.env:EVAL_DATA_DIR}/nq.parquet
+      custom_generate_function_path: examples.anysearch.slime_ext.rollout.generate
+      metadata_overrides: {dataset: nq, budget: 6, evaluation: true}
+    - name: nq_b7
+      path: ${oc.env:EVAL_DATA_DIR}/nq.parquet
+      custom_generate_function_path: examples.anysearch.slime_ext.rollout.generate
+      metadata_overrides: {dataset: nq, budget: 7, evaluation: true}
+    - name: nq_b8
+      path: ${oc.env:EVAL_DATA_DIR}/nq.parquet
+      custom_generate_function_path: examples.anysearch.slime_ext.rollout.generate
+      metadata_overrides: {dataset: nq, budget: 8, evaluation: true}
+
+    - name: triviaqa_b1
+      path: ${oc.env:EVAL_DATA_DIR}/triviaqa.parquet
+      custom_generate_function_path: examples.anysearch.slime_ext.rollout.generate
+      metadata_overrides: {dataset: triviaqa, budget: 1, evaluation: true}
+    - name: triviaqa_b2
+      path: ${oc.env:EVAL_DATA_DIR}/triviaqa.parquet
+      custom_generate_function_path: examples.anysearch.slime_ext.rollout.generate
+      metadata_overrides: {dataset: triviaqa, budget: 2, evaluation: true}
+    - name: triviaqa_b3
+      path: ${oc.env:EVAL_DATA_DIR}/triviaqa.parquet
+      custom_generate_function_path: examples.anysearch.slime_ext.rollout.generate
+      metadata_overrides: {dataset: triviaqa, budget: 3, evaluation: true}
+    - name: triviaqa_b4
+      path: ${oc.env:EVAL_DATA_DIR}/triviaqa.parquet
+      custom_generate_function_path: examples.anysearch.slime_ext.rollout.generate
+      metadata_overrides: {dataset: triviaqa, budget: 4, evaluation: true}
+    - name: triviaqa_b5
+      path: ${oc.env:EVAL_DATA_DIR}/triviaqa.parquet
+      custom_generate_function_path: examples.anysearch.slime_ext.rollout.generate
+      metadata_overrides: {dataset: triviaqa, budget: 5, evaluation: true}
+    - name: triviaqa_b6
+      path: ${oc.env:EVAL_DATA_DIR}/triviaqa.parquet
+      custom_generate_function_path: examples.anysearch.slime_ext.rollout.generate
+      metadata_overrides: {dataset: triviaqa, budget: 6, evaluation: true}
+    - name: triviaqa_b7
+      path: ${oc.env:EVAL_DATA_DIR}/triviaqa.parquet
+      custom_generate_function_path: examples.anysearch.slime_ext.rollout.generate
+      metadata_overrides: {dataset: triviaqa, budget: 7, evaluation: true}
+    - name: triviaqa_b8
+      path: ${oc.env:EVAL_DATA_DIR}/triviaqa.parquet
+      custom_generate_function_path: examples.anysearch.slime_ext.rollout.generate
+      metadata_overrides: {dataset: triviaqa, budget: 8, evaluation: true}
+
+    - name: popqa_b1
+      path: ${oc.env:EVAL_DATA_DIR}/popqa.parquet
+      custom_generate_function_path: examples.anysearch.slime_ext.rollout.generate
+      metadata_overrides: {dataset: popqa, budget: 1, evaluation: true}
+    - name: popqa_b2
+      path: ${oc.env:EVAL_DATA_DIR}/popqa.parquet
+      custom_generate_function_path: examples.anysearch.slime_ext.rollout.generate
+      metadata_overrides: {dataset: popqa, budget: 2, evaluation: true}
+    - name: popqa_b3
+      path: ${oc.env:EVAL_DATA_DIR}/popqa.parquet
+      custom_generate_function_path: examples.anysearch.slime_ext.rollout.generate
+      metadata_overrides: {dataset: popqa, budget: 3, evaluation: true}
+    - name: popqa_b4
+      path: ${oc.env:EVAL_DATA_DIR}/popqa.parquet
+      custom_generate_function_path: examples.anysearch.slime_ext.rollout.generate
+      metadata_overrides: {dataset: popqa, budget: 4, evaluation: true}
+    - name: popqa_b5
+      path: ${oc.env:EVAL_DATA_DIR}/popqa.parquet
+      custom_generate_function_path: examples.anysearch.slime_ext.rollout.generate
+      metadata_overrides: {dataset: popqa, budget: 5, evaluation: true}
+    - name: popqa_b6
+      path: ${oc.env:EVAL_DATA_DIR}/popqa.parquet
+      custom_generate_function_path: examples.anysearch.slime_ext.rollout.generate
+      metadata_overrides: {dataset: popqa, budget: 6, evaluation: true}
+    - name: popqa_b7
+      path: ${oc.env:EVAL_DATA_DIR}/popqa.parquet
+      custom_generate_function_path: examples.anysearch.slime_ext.rollout.generate
+      metadata_overrides: {dataset: popqa, budget: 7, evaluation: true}
+    - name: popqa_b8
+      path: ${oc.env:EVAL_DATA_DIR}/popqa.parquet
+      custom_generate_function_path: examples.anysearch.slime_ext.rollout.generate
+      metadata_overrides: {dataset: popqa, budget: 8, evaluation: true}
+
+    - name: hotpotqa_b1
+      path: ${oc.env:EVAL_DATA_DIR}/hotpotqa.parquet
+      custom_generate_function_path: examples.anysearch.slime_ext.rollout.generate
+      metadata_overrides: {dataset: hotpotqa, budget: 1, evaluation: true}
+    - name: hotpotqa_b2
+      path: ${oc.env:EVAL_DATA_DIR}/hotpotqa.parquet
+      custom_generate_function_path: examples.anysearch.slime_ext.rollout.generate
+      metadata_overrides: {dataset: hotpotqa, budget: 2, evaluation: true}
+    - name: hotpotqa_b3
+      path: ${oc.env:EVAL_DATA_DIR}/hotpotqa.parquet
+      custom_generate_function_path: examples.anysearch.slime_ext.rollout.generate
+      metadata_overrides: {dataset: hotpotqa, budget: 3, evaluation: true}
+    - name: hotpotqa_b4
+      path: ${oc.env:EVAL_DATA_DIR}/hotpotqa.parquet
+      custom_generate_function_path: examples.anysearch.slime_ext.rollout.generate
+      metadata_overrides: {dataset: hotpotqa, budget: 4, evaluation: true}
+    - name: hotpotqa_b5
+      path: ${oc.env:EVAL_DATA_DIR}/hotpotqa.parquet
+      custom_generate_function_path: examples.anysearch.slime_ext.rollout.generate
+      metadata_overrides: {dataset: hotpotqa, budget: 5, evaluation: true}
+    - name: hotpotqa_b6
+      path: ${oc.env:EVAL_DATA_DIR}/hotpotqa.parquet
+      custom_generate_function_path: examples.anysearch.slime_ext.rollout.generate
+      metadata_overrides: {dataset: hotpotqa, budget: 6, evaluation: true}
+    - name: hotpotqa_b7
+      path: ${oc.env:EVAL_DATA_DIR}/hotpotqa.parquet
+      custom_generate_function_path: examples.anysearch.slime_ext.rollout.generate
+      metadata_overrides: {dataset: hotpotqa, budget: 7, evaluation: true}
+    - name: hotpotqa_b8
+      path: ${oc.env:EVAL_DATA_DIR}/hotpotqa.parquet
+      custom_generate_function_path: examples.anysearch.slime_ext.rollout.generate
+      metadata_overrides: {dataset: hotpotqa, budget: 8, evaluation: true}
+
+    - name: 2wikimultihopqa_b1
+      path: ${oc.env:EVAL_DATA_DIR}/2wikimultihopqa.parquet
+      custom_generate_function_path: examples.anysearch.slime_ext.rollout.generate
+      metadata_overrides: {dataset: 2wikimultihopqa, budget: 1, evaluation: true}
+    - name: 2wikimultihopqa_b2
+      path: ${oc.env:EVAL_DATA_DIR}/2wikimultihopqa.parquet
+      custom_generate_function_path: examples.anysearch.slime_ext.rollout.generate
+      metadata_overrides: {dataset: 2wikimultihopqa, budget: 2, evaluation: true}
+    - name: 2wikimultihopqa_b3
+      path: ${oc.env:EVAL_DATA_DIR}/2wikimultihopqa.parquet
+      custom_generate_function_path: examples.anysearch.slime_ext.rollout.generate
+      metadata_overrides: {dataset: 2wikimultihopqa, budget: 3, evaluation: true}
+    - name: 2wikimultihopqa_b4
+      path: ${oc.env:EVAL_DATA_DIR}/2wikimultihopqa.parquet
+      custom_generate_function_path: examples.anysearch.slime_ext.rollout.generate
+      metadata_overrides: {dataset: 2wikimultihopqa, budget: 4, evaluation: true}
+    - name: 2wikimultihopqa_b5
+      path: ${oc.env:EVAL_DATA_DIR}/2wikimultihopqa.parquet
+      custom_generate_function_path: examples.anysearch.slime_ext.rollout.generate
+      metadata_overrides: {dataset: 2wikimultihopqa, budget: 5, evaluation: true}
+    - name: 2wikimultihopqa_b6
+      path: ${oc.env:EVAL_DATA_DIR}/2wikimultihopqa.parquet
+      custom_generate_function_path: examples.anysearch.slime_ext.rollout.generate
+      metadata_overrides: {dataset: 2wikimultihopqa, budget: 6, evaluation: true}
+    - name: 2wikimultihopqa_b7
+      path: ${oc.env:EVAL_DATA_DIR}/2wikimultihopqa.parquet
+      custom_generate_function_path: examples.anysearch.slime_ext.rollout.generate
+      metadata_overrides: {dataset: 2wikimultihopqa, budget: 7, evaluation: true}
+    - name: 2wikimultihopqa_b8
+      path: ${oc.env:EVAL_DATA_DIR}/2wikimultihopqa.parquet
+      custom_generate_function_path: examples.anysearch.slime_ext.rollout.generate
+      metadata_overrides: {dataset: 2wikimultihopqa, budget: 8, evaluation: true}
+
+    - name: musique_b1
+      path: ${oc.env:EVAL_DATA_DIR}/musique.parquet
+      custom_generate_function_path: examples.anysearch.slime_ext.rollout.generate
+      metadata_overrides: {dataset: musique, budget: 1, evaluation: true}
+    - name: musique_b2
+      path: ${oc.env:EVAL_DATA_DIR}/musique.parquet
+      custom_generate_function_path: examples.anysearch.slime_ext.rollout.generate
+      metadata_overrides: {dataset: musique, budget: 2, evaluation: true}
+    - name: musique_b3
+      path: ${oc.env:EVAL_DATA_DIR}/musique.parquet
+      custom_generate_function_path: examples.anysearch.slime_ext.rollout.generate
+      metadata_overrides: {dataset: musique, budget: 3, evaluation: true}
+    - name: musique_b4
+      path: ${oc.env:EVAL_DATA_DIR}/musique.parquet
+      custom_generate_function_path: examples.anysearch.slime_ext.rollout.generate
+      metadata_overrides: {dataset: musique, budget: 4, evaluation: true}
+    - name: musique_b5
+      path: ${oc.env:EVAL_DATA_DIR}/musique.parquet
+      custom_generate_function_path: examples.anysearch.slime_ext.rollout.generate
+      metadata_overrides: {dataset: musique, budget: 5, evaluation: true}
+    - name: musique_b6
+      path: ${oc.env:EVAL_DATA_DIR}/musique.parquet
+      custom_generate_function_path: examples.anysearch.slime_ext.rollout.generate
+      metadata_overrides: {dataset: musique, budget: 6, evaluation: true}
+    - name: musique_b7
+      path: ${oc.env:EVAL_DATA_DIR}/musique.parquet
+      custom_generate_function_path: examples.anysearch.slime_ext.rollout.generate
+      metadata_overrides: {dataset: musique, budget: 7, evaluation: true}
+    - name: musique_b8
+      path: ${oc.env:EVAL_DATA_DIR}/musique.parquet
+      custom_generate_function_path: examples.anysearch.slime_ext.rollout.generate
+      metadata_overrides: {dataset: musique, budget: 8, evaluation: true}
+
+    - name: bamboogle_b1
+      path: ${oc.env:EVAL_DATA_DIR}/bamboogle.parquet
+      custom_generate_function_path: examples.anysearch.slime_ext.rollout.generate
+      metadata_overrides: {dataset: bamboogle, budget: 1, evaluation: true}
+    - name: bamboogle_b2
+      path: ${oc.env:EVAL_DATA_DIR}/bamboogle.parquet
+      custom_generate_function_path: examples.anysearch.slime_ext.rollout.generate
+      metadata_overrides: {dataset: bamboogle, budget: 2, evaluation: true}
+    - name: bamboogle_b3
+      path: ${oc.env:EVAL_DATA_DIR}/bamboogle.parquet
+      custom_generate_function_path: examples.anysearch.slime_ext.rollout.generate
+      metadata_overrides: {dataset: bamboogle, budget: 3, evaluation: true}
+    - name: bamboogle_b4
+      path: ${oc.env:EVAL_DATA_DIR}/bamboogle.parquet
+      custom_generate_function_path: examples.anysearch.slime_ext.rollout.generate
+      metadata_overrides: {dataset: bamboogle, budget: 4, evaluation: true}
+    - name: bamboogle_b5
+      path: ${oc.env:EVAL_DATA_DIR}/bamboogle.parquet
+      custom_generate_function_path: examples.anysearch.slime_ext.rollout.generate
+      metadata_overrides: {dataset: bamboogle, budget: 5, evaluation: true}
+    - name: bamboogle_b6
+      path: ${oc.env:EVAL_DATA_DIR}/bamboogle.parquet
+      custom_generate_function_path: examples.anysearch.slime_ext.rollout.generate
+      metadata_overrides: {dataset: bamboogle, budget: 6, evaluation: true}
+    - name: bamboogle_b7
+      path: ${oc.env:EVAL_DATA_DIR}/bamboogle.parquet
+      custom_generate_function_path: examples.anysearch.slime_ext.rollout.generate
+      metadata_overrides: {dataset: bamboogle, budget: 7, evaluation: true}
+    - name: bamboogle_b8
+      path: ${oc.env:EVAL_DATA_DIR}/bamboogle.parquet
+      custom_generate_function_path: examples.anysearch.slime_ext.rollout.generate
+      metadata_overrides: {dataset: bamboogle, budget: 8, evaluation: true}

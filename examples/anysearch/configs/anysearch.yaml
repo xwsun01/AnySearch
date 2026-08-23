@@ -1,0 +1,166 @@
+# Canonical experiment configuration for "One Policy, Any Budget".
+# Workers load this file from ANYSEARCH_CONFIG so command-line seeds retain
+# precedence over configuration defaults.
+schema_version: 1
+experiment_name: anysearch
+seed: 42
+
+framework:
+  name: slime
+  repository: https://github.com/THUDM/slime
+  commit: 52fc971bfe4ad7a1e857ac158d626d4b6373474d
+  entrypoint: train_async.py
+  asynchronous: true
+  colocate: false
+  trainer_gpus: 4
+  rollout_gpus: 4
+  trainer_tensor_parallel_size: 2
+  rollout_tensor_parallel_size: 2
+  sglang_mem_fraction_static: 0.6
+
+training:
+  algorithm: grpo
+  num_rollouts: 100
+  rollout_batch_size_prompts: 512
+  group_size: 5
+  trajectories_per_rollout: 2560
+  global_batch_size_trajectories: 512
+  optimizer_steps_per_rollout: 5
+  total_optimizer_steps: 500
+  max_response_tokens: 4096
+  # Maximum combined sequence length for prompt, generation, and retrieved passages.
+  max_context_tokens: 32768
+  temperature: 1.0
+  top_p: 1.0
+  top_k: -1
+  shuffle: true
+  balance_data: true
+  learning_rate: 1.0e-6
+  optimizer: adam
+  adam_beta1: 0.9
+  adam_beta2: 0.98
+  weight_decay: 0.01
+  lr_schedule: constant
+  kl_loss: true
+  kl_coefficient: 0.001
+  kl_type: low_var_kl
+  clip_ratio_low: 0.2
+  clip_ratio_high: 0.28
+  advantage_epsilon: 1.0e-6
+  entropy_coefficient: 0.0
+  attention_dropout: 0.0
+  hidden_dropout: 0.0
+  gradient_checkpointing: true
+  sequence_parallel: true
+  dynamic_batching: true
+  # Adjust this per-GPU token capacity after a memory calibration run if needed.
+  max_tokens_per_gpu: 9216
+
+curriculum:
+  budget_min: 1
+  budget_max: 5
+  sliding_window_size: 20
+  uniform_smoothing_lambda: 0.6
+  smoothing_epsilon: 1.0e-6
+  # Windows record individual trajectory correctness, not query-group means.
+  window_unit: trajectory
+  # All five trajectories sampled from a prompt share its assigned budget.
+  budget_assignment_unit: prompt_group
+  phase_i:
+    start_rollout: 0
+    num_rollouts: 20
+    optimizer_steps: 100
+    scaffold: true
+    schedule:
+      type: descending_blocks
+      budgets: [5, 4, 3, 2, 1]
+      rollouts_per_budget: 4
+      optimizer_steps_per_budget: 20
+  phase_ii:
+    start_rollout: 20
+    num_rollouts: 80
+    optimizer_steps: 400
+    scaffold: false
+    schedule:
+      type: adaptive_accuracy_gap
+      cold_start: uniform
+      budgets: [1, 2, 3, 4, 5]
+
+reward:
+  formula: alpha*accuracy + beta*format + delta*length + gamma_q*tool
+  accuracy:
+    enabled: true
+    weight: 0.5
+    metric: normalized_exact_match
+    accepted_answers_key: target
+  format:
+    enabled: true
+    weight: 0.15
+    require_paired_tags: true
+    require_valid_order: true
+    forbid_text_outside_tags: true
+    phase_i_tags: [budget, think, search, information, answer]
+    phase_ii_tags: [think, search, information, answer]
+  length:
+    enabled: true
+    weight: 0.05
+    measured_tokens: model_generated_only
+    limit: 2048
+    tolerance: 1024
+    minimum_reward: -1.0
+  tool:
+    enabled: true
+    gamma_max: 0.3
+    stability_xi: 1.0e-6
+    correctness_gated: true
+    absolute_component: true
+    relative_component: true
+    zero_correct_group_reward: 0.0
+    equal_correct_search_counts_relative_reward: 1.0
+    gamma_mode: adaptive_group_accuracy
+
+interaction:
+  search_tag: search
+  information_tag: information
+  think_tag: think
+  answer_tag: answer
+  budget_tag: budget
+  reject_search_when_exhausted: true
+  environment_tokens_loss_mask: 0
+  model_tokens_loss_mask: 1
+  phase_i_inject_budget_each_turn: true
+  phase_ii_total_budget_in_initial_prompt_only: true
+  phase_ii_inject_budget_each_turn: false
+  inference_scaffold: false
+  # Maximum retries for malformed or over-budget model actions.
+  invalid_action_max_retries: 2
+
+retrieval:
+  backend: e5_faiss_flat
+  model: intfloat/e5-base-v2
+  corpus: wikipedia_2018
+  approximate_search: false
+  top_k: 3
+  faiss_gpu: true
+  endpoint_env: ANYSEARCH_RETRIEVAL_URL
+  default_endpoint: http://127.0.0.1:8000/retrieve
+
+data:
+  training_datasets: [nq, hotpotqa]
+  evaluation_datasets: [nq, triviaqa, popqa, hotpotqa, 2wikimultihopqa, musique, bamboogle]
+  input_key: question
+  label_key: label
+  metadata_key: metadata
+  evaluation_budgets: [1, 2, 3, 4, 5, 6, 7, 8]
+  evaluation_samples_per_prompt: 1
+  primary_metric: exact_match
+  efficiency_metric: tool_productivity
+
+slime_extensions:
+  data_source_path: examples.anysearch.slime_ext.data_source.AnySearchDataSource
+  rollout_function_path: examples.anysearch.slime_ext.rollout.generate_rollout
+  eval_function_path: examples.anysearch.slime_ext.rollout.generate_eval_rollout
+  per_sample_generate_path: examples.anysearch.slime_ext.rollout.generate
+  training_group_reward_path: examples.anysearch.slime_ext.rewards.group_reward
+  evaluation_reward_path: examples.anysearch.slime_ext.rewards.eval_reward
+  eval_log_path: examples.anysearch.metrics.log_eval_rollout_data

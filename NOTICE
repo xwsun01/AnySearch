@@ -1,0 +1,14 @@
+AnySearch, a fork of Slime
+Copyright 2026 AnySearch Contributors
+
+This product is licensed under the Apache License, Version 2.0.
+
+This repository contains a fork of THUDM/slime based on commit
+52fc971bfe4ad7a1e857ac158d626d4b6373474d. Slime is Copyright its respective
+contributors and is licensed under Apache-2.0. AnySearch-specific additions are
+located under examples/anysearch and use Slime's public extension interfaces.
+
+No model weights, benchmark data, Wikipedia passages, FAISS indexes, or trained
+checkpoints are distributed in this repository.
+
+See THIRD_PARTY_NOTICES.md for dependency, model, dataset, and corpus notices.
