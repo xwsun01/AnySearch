@@ -9,8 +9,6 @@ via Reinforcement Learning.”**
   <a href="https://arxiv.org/pdf/2609.00813"><img alt="Paper" src="https://img.shields.io/badge/Paper-arXiv-b31b1b?logo=arxiv&logoColor=white"></a>
 </p>
 
-[Paper](https://arxiv.org/abs/XXXX.XXXXX) · [Configuration](examples/anysearch/configs/anysearch.yaml) · [中文](README_zh.md)
-
 
 AnySearch trains a single search policy that operates under different
 inference-time search budgets through a two-phase budget curriculum and
@@ -216,8 +214,19 @@ bash examples/anysearch/scripts/run_qwen3_4b.sh \
 
 ## Citation
 
-Citation metadata will be added when the arXiv record becomes publicly
-available.
+If you find AnySearch useful in your research, please cite our paper:
+
+```bibtex
+@misc{sun2026anysearch,
+  title         = {One Policy, Any Budget: Internalizing Budget-Aware Search via Reinforcement Learning},
+  author        = {Sun, Xiaowei and Li, Jin and Hong, Yili and Fu, Yikun and Xiao, Yanghua},
+  year          = {2026},
+  eprint        = {2609.00813},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.AI},
+  url           = {https://arxiv.org/abs/2609.00813}
+}
+```
 
 ## Acknowledgements
 
