@@ -5,9 +5,8 @@ Reinforcement Learning》** 官方代码。
 
 **EMNLP 2026 Findings**
 
-[论文](https://arxiv.org/abs/XXXX.XXXXX) · [实验配置](examples/anysearch/configs/anysearch.yaml) · [English](README.md)
+<a href="https://arxiv.org/pdf/2609.00813"><img alt="Paper" src="https://img.shields.io/badge/Paper-arXiv-b31b1b?logo=arxiv&logoColor=white"></a>
 
-<!-- TODO: arXiv 公开后替换上面的占位链接。 -->
 
 AnySearch 通过两阶段预算课程学习以及答案质量和搜索效率的组级奖励，训练一个能够在
 不同推理搜索预算下工作的统一搜索策略。
@@ -204,7 +203,19 @@ bash examples/anysearch/scripts/run_qwen3_4b.sh \
 
 ## 引用
 
-arXiv 页面公开后将在这里补充正式 BibTeX。
+如果 AnySearch 对您的研究有所帮助，请引用我们的论文：
+
+```bibtex
+@misc{sun2026anysearch,
+  title         = {One Policy, Any Budget: Internalizing Budget-Aware Search via Reinforcement Learning},
+  author        = {Sun, Xiaowei and Li, Jin and Hong, Yili and Fu, Yikun and Xiao, Yanghua},
+  year          = {2026},
+  eprint        = {2609.00813},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.AI},
+  url           = {https://arxiv.org/abs/2609.00813}
+}
+```
 
 ## 致谢
 
