@@ -5,9 +5,12 @@ via Reinforcement Learning.”**
 
 **EMNLP 2026 Findings**
 
+<p>
+  <a href="https://arxiv.org/pdf/2609.00813"><img alt="Paper" src="https://img.shields.io/badge/Paper-arXiv-b31b1b?logo=arxiv&logoColor=white"></a>
+</p>
+
 [Paper](https://arxiv.org/abs/XXXX.XXXXX) · [Configuration](examples/anysearch/configs/anysearch.yaml) · [中文](README_zh.md)
 
-<!-- TODO: replace the arXiv placeholder above after the public record is available. -->
 
 AnySearch trains a single search policy that operates under different
 inference-time search budgets through a two-phase budget curriculum and
